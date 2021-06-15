@@ -1,0 +1,172 @@
+html,
+ body {
+   height: 100%;
+   width: 100%;
+   margin-top: 0;
+   margin-left: 0;
+}
+
+.header {
+  background-color: pink;
+  padding: 0.5em;
+  height: 40px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.title {
+  color: white;
+  font-family: cursive;
+  font-size: xx-large;
+  display: flex;
+  align-items: center;
+  font-weight: 900;
+}
+
+
+.login {
+  background-color:whitesmoke;
+  border-radius: 5em;
+  padding: 0.5em 1em;
+  cursor: default;
+}
+
+.login:hover {
+  background-color: oldlace;
+}
+
+.add-spot {
+  background-color:whitesmoke;
+  border-radius: 5em;
+  padding: 0.5em 1em;
+  cursor: default;
+}
+
+.add-spot:hover {
+  background-color: oldlace;
+}
+
+.searchbar-ctn {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.searchbar {
+  margin: 0.5em;
+  width: 41em;
+  height: 3em;
+}
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.isbusiness {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-button {
+  border: 1px dashed gray;
+  padding: 3em;
+  margin: 1em 0em;
+  width: 1em;
+  border-radius: 9px;
+}
+
+.button-test {
+  display: flex;
+  align-items: center;
+}
+
+.form-img {
+  width: 6.5em;
+  height: 6.5em;
+  margin-right: 1em;
+  border-radius: 9px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+.img-button {
+  width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    position: absolute;
+    left: 75%;
+    top: 5%;
+    background-image: url("./deletebutton.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 10px;
+}
+
+#upload-photo {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.form-box {
+  display: flex;
+  flex-direction: column;
+  margin: 0.2em 0;
+}
+
+.form-box label {
+  font-weight: 550;
+  font-size: 14px;
+}
+
+.submit-btn {
+  align-self: center;
+}
+
+.form-name {
+  border: none;
+  border-bottom: 1px solid black;
+  width: 26em;
+  height: 3em;
+}
+
+.form-location {
+  border: none;
+  border-bottom: 1px solid black;
+  width: 30em;
+  height: 3em;
+}
+
+.form-description {
+  width: 30em;
+  height: 5em;
+}
+
+.form-covid {
+  width: 30em;
+  height: 5em;
+}
+
+.form-website {
+  width: 20em;
+}
+
+.form-number {
+  width: 20em;
+}
+
+.form-email {
+  width: 20em;
+}
+
+.hours {
+  display: flex;
+  flex-direction: column;
+}
