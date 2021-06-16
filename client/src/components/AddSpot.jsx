@@ -8,12 +8,11 @@ class AddSpot extends Component {
 
     this.state = {
       business: false,
-      photo: [],
-      url: []
+      photo: {}
     }
     this.handleBusiness = this.handleBusiness.bind(this);
     this.handlePhoto = this.handlePhoto.bind(this);
-    this.handleThumbnail = this.handleThumbnail.bind(this);
+    this.handleDeleteFile = this.handleDeleteFile.bind(this);
   }
 
   handleBusiness (event) {
@@ -24,26 +23,26 @@ class AddSpot extends Component {
 
   handlePhoto (event) {
     var photos = this.state.photo;
-    photos.push(event.target.files[0])
+    photos[URL.createObjectURL(event.target.files[0])] = event.target.files[0]
+
     this.setState({
       photo: photos
-    }, this.handleThumbnail(event.target.files))
+    })
   }
 
-  handleThumbnail(files) {
-      var photo = document.createElement("div");
-      photo.style.backgroundImage = `url(${URL.createObjectURL(files[0])})`;
-      photo.className = 'form-img';
+  handleDeleteFile(i) {
+    for (var key in this.state.photo) {
+      if (key === i) {
+        delete this.state.photo[key];
+      }
+    }
 
-      var button = document.createElement("button");
-      button.className= 'img-button';
-      button.type = 'button'
-      photo.appendChild(button)
-      var forDiv = document.getElementById('thumbnail');
-      forDiv.prepend(photo);
-
-
+    this.setState({
+      photo: this.state.photo
+    })
   }
+
+
 
   render () {
     return (
@@ -61,6 +60,28 @@ class AddSpot extends Component {
           <div className="form-box">
             <label>Add Pictures</label>
             <div className="button-test" id="thumbnail">
+              {Object.keys(this.state.photo).length > 0 &&
+              Object.keys(this.state.photo).map((item, index) => {
+
+                var styleSection = {
+                  backgroundImage: `url(${item})`,
+                  backgroundSize: "cover",
+                  marginRight: "1em",
+                  width: "6.5em",
+                  height: "6.5em",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  borderRadius: "9px"
+                }
+
+                return (
+                  <div className="form-imgblock" key={index}>
+                    <div style={styleSection}></div>
+                    <button type="button" className="img-button" onClick={() => this.handleDeleteFile(item)}></button>
+                  </div>
+                )
+              })
+              }
               <label htmlFor="upload-photo" className="add-button">+</label>
               <input type="file" name="photo" id="upload-photo" onChange={this.handlePhoto}></input>
             </div>

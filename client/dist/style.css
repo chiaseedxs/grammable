@@ -84,7 +84,11 @@ html,
   align-items: center;
 }
 
-.form-img {
+.form-imgblock {
+  position: relative;
+}
+
+/* .form-img {
   width: 6.5em;
   height: 6.5em;
   margin-right: 1em;
@@ -93,15 +97,15 @@ html,
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
-}
+} */
 
 .img-button {
-  width: 20px;
+    width: 20px;
     height: 20px;
     border-radius: 50%;
     border: none;
     position: absolute;
-    left: 75%;
+    left: 65%;
     top: 5%;
     background-image: url("./deletebutton.png");
     background-position: center;
