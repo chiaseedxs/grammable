@@ -1,6 +1,9 @@
 import React, { Component} from "react";
 import Searchbar from './Searchbar.jsx'
-import Header from './Header.jsx'
+import Header from './Header.jsx';
+
+
+
 
 class AddSpot extends Component {
   constructor(props) {
@@ -8,11 +11,22 @@ class AddSpot extends Component {
 
     this.state = {
       business: false,
-      photo: {}
+      photo: {},
+      value: ['10:00', '11:00'],
+      locationName: "",
+      locationAddress: "",
+      websiteLink: "",
+      websitePhoneNumber: "",
+      websiteEmail: "",
+      locationDescription: "",
+      locationCovid: "",
+
     }
     this.handleBusiness = this.handleBusiness.bind(this);
     this.handlePhoto = this.handlePhoto.bind(this);
     this.handleDeleteFile = this.handleDeleteFile.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleBusiness (event) {
@@ -42,19 +56,40 @@ class AddSpot extends Component {
     })
   }
 
+  handleChange () {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+
+  handleSubmit () {
+    let data = new FormData();
+    var photos = Object.values(this.state.photo);
+
+    photos.forEach(photo => data.append('spots', photo));
+  }
+
+
+
 
 
   render () {
+
     return (
-      <form className="form">
+      <form
+        className="form"
+        method="post"
+        encType="multipart/form-data"
+      >
           <div className="form-box">
           <label> Name of location</label>
-          <input className="form-name"></input>
+          <input className="form-name" name="locationName" onChange={this.handleChange}></input>
           </div>
 
           <div className="form-box">
           <label>Address</label>
-          <input className="form-location"></input>
+          <input className="form-location" name="locationAddress" onChange={this.handleChange}></input>
           </div>
 
           <div className="form-box">
@@ -83,13 +118,13 @@ class AddSpot extends Component {
               })
               }
               <label htmlFor="upload-photo" className="add-button">+</label>
-              <input type="file" name="photo" id="upload-photo" onChange={this.handlePhoto}></input>
+              <input type="file" name="spots" id="upload-photo" accept="image/png, image/jpeg" onChange={this.handlePhoto}></input>
             </div>
           </div>
 
 
           <div>
-            <label>Is this a business?</label>
+            <label className="bold">Is this a business?</label>
             <input type="radio" id="yes" name="answer" value="true" onChange={this.handleBusiness}></input>
             <label htmlFor="yes">Yes</label>
             <input type="radio" id="no" name="answer" value="false" onChange={this.handleBusiness}></input>
@@ -100,44 +135,30 @@ class AddSpot extends Component {
           <div className="isbusiness">
             <div className="form-box">
               <label>Website link:</label>
-              <input type="url" className="form-website"></input>
+              <input type="url" className="form-website" name="websiteLink" onChange={this.handleChange}></input>
             </div>
 
             <div className="form-box">
               <label>Phone number:</label>
-              <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" className="form-number" required></input>
+              <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" className="form-number" name="websitePhoneNumber" onChange={this.handleChange}></input>
             </div>
 
             <div className="form-box">
               <label>Email:</label>
-              <input type="email" className="form-email"></input>
+              <input type="email" className="form-email" name="websiteEmail" onChange={this.handleChange}></input>
             </div>
 
-
-            <div className="form-box">
-              <label>Hours:</label>
-              <div className="hours">
-                <label>Monday: <input className="form-hours"></input></label>
-                <label>Tuesday: <input className="form-hours"></input></label>
-                <label> Wednesday:<input className="form-hours"></input></label>
-                <label>Thursday: <input className="form-hours"></input></label>
-                <label>Friday: <input className="form-hours"></input></label>
-                <label>Saturday: <input className="form-hours"></input></label>
-                <label>Sunday: <input className="form-hours"></input></label>
-              </div>
-
-            </div>
           </div>
           : null}
 
           <div className="form-box">
           <label>Description</label>
-          <textarea className="form-description"></textarea>
+          <textarea className="form-description" name="locationDescription" onChange={this.handleChange}></textarea>
           </div>
 
           <div className="form-box">
-          <label>Covid related information:</label>
-          <textarea className="form-covid"></textarea>
+          <label>Covid related information</label>
+          <textarea className="form-covid" name="locationCovid" onChange={this.handleChange}></textarea>
           </div>
 
 

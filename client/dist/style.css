@@ -22,6 +22,7 @@ html,
   display: flex;
   align-items: center;
   font-weight: 900;
+  cursor: default;
 }
 
 
@@ -64,6 +65,7 @@ html,
   display: flex;
   flex-direction: column;
   padding: 2em;
+
 }
 
 .isbusiness {
@@ -88,16 +90,6 @@ html,
   position: relative;
 }
 
-/* .form-img {
-  width: 6.5em;
-  height: 6.5em;
-  margin-right: 1em;
-  border-radius: 9px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: relative;
-} */
 
 .img-button {
     width: 20px;
@@ -122,7 +114,7 @@ html,
 .form-box {
   display: flex;
   flex-direction: column;
-  margin: 0.2em 0;
+  margin: 1em 0;
 }
 
 .form-box label {
@@ -131,7 +123,13 @@ html,
 }
 
 .submit-btn {
-  align-self: center;
+  width: 5em;
+  height: 3em;
+}
+
+.bold {
+  font-weight: 550;
+  font-size: 15px;
 }
 
 .form-name {
@@ -170,7 +168,18 @@ html,
   width: 20em;
 }
 
-.hours {
+.hours-ctn {
   display: flex;
   flex-direction: column;
 }
+
+.hours {
+  display: grid;
+  width: 50em;
+  grid-template-columns: 15% 18% 2% 20% 20%;
+}
+
+.time-box {
+  width: 10em;
+}
+

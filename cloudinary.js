@@ -1,0 +1,1 @@
+exports.CLOUD_SECRET = process.env.CLOUD_SECRET || 'cloud-secret';

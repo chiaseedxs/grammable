@@ -1,4 +1,5 @@
 import React, { Component} from "react";
+import Map from './googlemap.jsx';
 
 class Searchbar extends Component {
   constructor(props) {

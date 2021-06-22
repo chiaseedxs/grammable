@@ -14,7 +14,7 @@ class Header extends Component {
   render () {
     return (
         <div className="header">
-          <div className="title">grammable</div>
+          <div className="title" onClick={()=> this.props.feed("search")}>grammable</div>
           <div>Favorite</div>
           <div className="add-spot" onClick={() => this.props.feed("form")}>Add a location</div>
           <div className="login">Sign in</div>
