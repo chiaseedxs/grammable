@@ -1,4 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from "./components/App.jsx";
-ReactDOM.render(<App />, document.getElementById("root"));
+import { Auth0Provider } from '@auth0/auth0-react';
+
+
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+ReactDOM.render(<App/>,document.getElementById("root"));

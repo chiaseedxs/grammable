@@ -1,8 +1,10 @@
 import React, { Component} from "react";
 import Searchbar from './Searchbar.jsx'
 import Header from './Header.jsx';
+import Map from './googlemap.jsx';
+import Submitted from './submitted.jsx'
 
-
+const axios = require('axios');
 
 
 class AddSpot extends Component {
@@ -12,21 +14,22 @@ class AddSpot extends Component {
     this.state = {
       business: false,
       photo: {},
-      value: ['10:00', '11:00'],
       locationName: "",
-      locationAddress: "",
+      locationAddress: [],
       websiteLink: "",
       websitePhoneNumber: "",
       websiteEmail: "",
       locationDescription: "",
       locationCovid: "",
-
+      submit: false,
     }
     this.handleBusiness = this.handleBusiness.bind(this);
     this.handlePhoto = this.handlePhoto.bind(this);
     this.handleDeleteFile = this.handleDeleteFile.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAddress = this.handleAddress.bind(this);
+    this.exit = this.exit.bind(this);
   }
 
   handleBusiness (event) {
@@ -41,6 +44,13 @@ class AddSpot extends Component {
 
     this.setState({
       photo: photos
+    })
+  }
+
+  handleAddress(address) {
+    var coordinates = [address.lng, address.lat]
+    this.setState({
+      locationAddress: coordinates
     })
   }
 
@@ -62,34 +72,76 @@ class AddSpot extends Component {
     })
   }
 
+  exit () {
+      this.setState({
+        submit: false
+      })
+  }
 
-  handleSubmit () {
+
+  handleSubmit (e) {
+    e.preventDefault();
     let data = new FormData();
     var photos = Object.values(this.state.photo);
 
-    photos.forEach(photo => data.append('spots', photo));
+    var body = {
+      isBusiness: this.state.business,
+      picture: data,
+      Name: this.state.locationName,
+      Address: this.state.locationAddress,
+      Link: this.state.websiteLink,
+      phoneNumber: this.state.websitePhoneNumber,
+      websiteEmail: this.state.websiteEmail,
+      locationDescription: this.state.locationDescription,
+      locationCovid: this.state.locationCovid,
+    }
+
+    photos.forEach(file => data.append('photo', file));
+    // data.append('body', body)
+    axios({
+      url: '/form',
+      data: data,
+      params: body,
+      method: 'post'
+    })
+    .then((res) => {
+      this.setState({
+        submit: true
+      })
+    })
+    .catch(err => console.log('ERR',err))
   }
 
 
 
 
-
   render () {
-
     return (
+      <div>
+      {this.state.submit ?  <Submitted exit={this.exit}/> :
       <form
         className="form"
         method="post"
+        onSubmit={this.handleSubmit}
         encType="multipart/form-data"
+        autoComplete="off"
       >
+
+        <h2>Share Instagrammable Spot!</h2>
+        <div>
           <div className="form-box">
           <label> Name of location</label>
-          <input className="form-name" name="locationName" onChange={this.handleChange}></input>
+          <input className="form-name" name="locationName" onChange={this.handleChange} required></input>
           </div>
 
           <div className="form-box">
           <label>Address</label>
-          <input className="form-location" name="locationAddress" onChange={this.handleChange}></input>
+          <div className="address-wording">Pin location on the map</div>
+          <Map handleAddress={this.handleAddress}/>
+          <div className="additional-info">
+          <label>Addition information</label>
+          <input placeholder="e.g. apartment number, free parking"></input>
+          </div>
           </div>
 
           <div className="form-box">
@@ -118,7 +170,7 @@ class AddSpot extends Component {
               })
               }
               <label htmlFor="upload-photo" className="add-button">+</label>
-              <input type="file" name="spots" id="upload-photo" accept="image/png, image/jpeg" onChange={this.handlePhoto}></input>
+              <input type="file" name="photo" id="upload-photo" accept="image/png, image/jpeg" onChange={this.handlePhoto} required></input>
             </div>
           </div>
 
@@ -161,9 +213,12 @@ class AddSpot extends Component {
           <textarea className="form-covid" name="locationCovid" onChange={this.handleChange}></textarea>
           </div>
 
-
+          </div>
           <button className="submit-btn" type="submit">Submit</button>
       </form>
+  }
+
+      </div>
     )
   }
 }

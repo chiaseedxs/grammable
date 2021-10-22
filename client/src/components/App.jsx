@@ -1,14 +1,19 @@
 import React, { Component} from "react";
+import ReactDOM from "react-dom";
 import Searchbar from './Searchbar.jsx'
+import HomePage from './HomePage.jsx'
 import Header from './Header.jsx'
 import AddSpot from './AddSpot.jsx'
 import Map from './googlemap.jsx'
+import InstagramSpot from './InstagramSpot.jsx'
+
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: "search",
+      view: "home",
+      info: {},
       location: {
         lat: 28.5383,
         lng: -81.3792
@@ -17,6 +22,7 @@ class App extends Component {
 
     this.changeView = this.changeView.bind(this);
     this.renderView = this.renderView.bind(this);
+    this.instagramSpot = this.instagramSpot.bind(this);
   }
 
   componentDidMount () {
@@ -38,20 +44,23 @@ class App extends Component {
     })
   }
 
+  instagramSpot (info) {
+    this.setState({
+      info: info
+    }, this.changeView("instaSpot"))
+  }
+
   renderView () {
     const {view} = this.state;
 
-    if (view === "search") {
-      return (
-       <div>
-        <Searchbar/>
-        <Map location={this.state.location}/>
-       </div>
-      )
+    if (view === "home") {
+      return <HomePage  addSpot={this.instagramSpot}/>
     }
     if (view === "form") {
       return <AddSpot/>
-
+    }
+    if (view === "instaSpot") {
+      return <InstagramSpot info={this.state.info}/>
     }
   }
 
