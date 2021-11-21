@@ -16,6 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static(__dirname + '/../client/dist'));
 
+
+
 const { CLOUD_NAME, CLOUD_API, CLOUD_SECRET, CLOUDINARY_URL} = require('../cloudinary.js');
 cloudinary.config({
   cloud_name: CLOUD_NAME,
@@ -48,6 +50,8 @@ app.post('/form', cloudParser.array('photo'), spots.addSpot)
 app.get('/spots', spots.sendSpots)
 
 app.get('/getall', spots.sendAll)
+
+app.get('*', (req, res) => res.sendFile(path.resolve('client', 'dist', 'index.html')));
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)

@@ -8,7 +8,6 @@ html,
 
 .header {
   background-color: white;
-  border-bottom: 1px solid gainsboro;
   padding: 0.5em;
   height: 40px;
   display: flex;
@@ -23,6 +22,9 @@ html,
   align-items: center;
   font-weight: 900;
   cursor: default;
+  color: black;
+  text-decoration: none;
+
 }
 
 
@@ -45,9 +47,24 @@ html,
   border-radius: 5em;
   padding: 0.5em 1em;
   cursor: default;
+  color: black;
+  text-decoration: none;
 }
 
 .add-spot:hover {
+  background-color: lavender;
+}
+
+.fav {
+  background-color:whitesmoke;
+  border-radius: 5em;
+  padding: 0.5em 1em;
+  cursor: default;
+  color: black;
+  text-decoration: none;
+}
+
+.fav:hover {
   background-color: lavender;
 }
 
@@ -65,21 +82,62 @@ html,
   width: 41em;
   height: 3em;
 }
+.form-title {
+  text-align: center;
+  font-family: system-ui;
+  margin: 0em;
+  padding-top: 1em;
+  color: #66618E;
+  font-weight: 800;
+}
 
 
 .form {
   display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1em;
-    width: 50%;
-    margin: 0 auto;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+  align-items: center;
+  border-radius: 8px;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
 
+.biggercol {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.colform-1 {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  margin: 1em 0;
+  padding: 1em;
+}
+
+.colform-2 {
+  width: 50%;
+  padding: 1em;
+}
+
+.form input {
+  text-indent: 1em;
 }
 
 .isbusiness {
   display: flex;
   flex-direction: column;
+}
+
+.isbusiness input {
+  background-color: #F0EFF7;
+  border: none;
+  border-radius: 7px;
+  height: 3em;
 }
 
 .add-button {
@@ -98,6 +156,10 @@ html,
 
 .form-imgblock {
   position: relative;
+}
+
+.white {
+  color: white;
 }
 
 
@@ -130,11 +192,18 @@ html,
 .form-box label {
   font-weight: 550;
   font-size: 14px;
+  margin-bottom: 0.5em;
 }
 
 .submit-btn {
-  width: 5em;
+  width: 7em;
+  border: none;
+  border-radius: 14px;
+  background: #9D94DC;
   height: 3em;
+  color: white;
+  font-weight: bolder;
+  margin-bottom: 1em;
 }
 
 .bold {
@@ -144,7 +213,8 @@ html,
 
 .form-name {
   border: none;
-  border-bottom: 1px solid black;
+  background-color: #F0EFF7;
+  border-radius: 7px;
   width: 100%;
   height: 3em;
 
@@ -160,14 +230,20 @@ html,
 
 .form-description {
   font-family: inherit;
-  width: 30em;
-  height: 5em;
+  width: 100%;
+  height: 8em;
+  border: none;
+  background-color: #F0EFF7;
+  border-radius: 7px;
 }
 
 .form-covid {
   font-family: inherit;
-  width: 30em;
-  height: 5em;
+  width: 100%;
+  height: 8em;
+  border: none;
+  background-color: #F0EFF7;
+  border-radius: 7px;
 }
 
 .form-website {
@@ -209,6 +285,7 @@ html,
 
 .search input {
   padding: 0.8rem;
+  padding-left: 0;
   width: 70%;
 }
 
@@ -218,9 +295,6 @@ html,
   margin-top: 1em;
 }
 
-.address-wording {
-  margin-top: 1em;
-}
 
 .additional-info {
   margin-top: 1em;
@@ -229,8 +303,13 @@ html,
 }
 
 .additional-info input {
+  border: none;
+  background-color: #F0EFF7;
+  border-radius: 7px;
   height: 3em;
+  border-radius: 7px;
 }
+
 
 .search-options {
   background-color: white;
@@ -267,7 +346,7 @@ html,
 .location-hg {
   margin: 2em;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   position: relative;
 
 }
@@ -280,7 +359,7 @@ html,
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1px;
+  margin: 0 1em;
   width: 300px;
   position: relative;
 }
@@ -318,6 +397,11 @@ html,
 .spot-title {
   margin-left: 2em;
   margin-top: 2em;
+  font-family: monospace;
+}
+
+.around-the-world {
+  margin-top: 3em;
 }
 
 .forward-btn {
@@ -423,7 +507,7 @@ html,
 
 .spot-page {
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -431,6 +515,7 @@ html,
   margin: 2em;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .spot-name {
@@ -442,3 +527,17 @@ html,
 .spot-description {
   margin-top: 2em;
 }
+
+.Error {
+  color: red;
+}
+
+.map-info {
+  width: 25%;
+  background-color: lightgrey;
+  padding: 2em;
+  margin-right: 1em;
+}
+
+
+

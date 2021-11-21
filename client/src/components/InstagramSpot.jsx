@@ -1,4 +1,6 @@
 import React, { Component} from "react";
+import LocationMap from "./locationmap.jsx"
+
 
 class InstagramSpot extends Component {
   constructor(props) {
@@ -11,18 +13,16 @@ class InstagramSpot extends Component {
 
     return (
       <div className="spot-page">
+        <div className="spot-info">
+        <div className="spot-name">{spot.Name}</div>
         <div className="picturebox">
           <img className="picex" src={spot.Picture[0]} />
         </div>
+        <div className="spot-description">{spot.Description}</div>
+        </div>
 
-        <div className="spot-info">
-          <div className="spot-name">{spot.Name}</div>
-          <div className="spot-description">{spot.Description}</div>
-        {spot.isBusiness ? <div>
-          {spot.Email}
-          {spot.Link}
-          {spot.phoneNumber}
-        </div> : null}
+        <div className="map-info">
+          <LocationMap location={spot.location.coordinates}/>
         </div>
       </div>
     )

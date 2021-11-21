@@ -68,7 +68,6 @@ class App extends Component {
     return (
       <div>
         <Header feed={this.changeView}/>
-        {this.renderView()}
       </div>
     )
   }

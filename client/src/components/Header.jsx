@@ -1,6 +1,9 @@
 import React, { Component} from "react";
 import AddSpot from './AddSpot.jsx'
-import LoginButton from './LoginButton.jsx'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Outlet, Link } from "react-router-dom";
+
+
 
 class Header extends Component {
   constructor(props) {
@@ -9,12 +12,16 @@ class Header extends Component {
 
   render () {
     return (
-        <div className="header">
-          <div className="title" onClick={()=> this.props.feed("home")}>grammable</div>
-          <div className="fav" onClick={() => this.props.feed("favorite")}>Favorite</div>
-          <div className="add-spot" onClick={() => this.props.feed("form")}>Add a location</div>
-          <LoginButton/>
-        </div>
+      <div>
+        <nav className="header">
+          <Link className="title" to="/">Grammable</Link>
+          <Link className="fav" to="favorite">Favorite</Link>
+          <Link className="add-spot" to="form"> Add a location </Link>
+        </nav>
+        <Outlet />
+
+      </div>
+
     )
   }
 }

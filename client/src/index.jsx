@@ -1,10 +1,30 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 import App from "./components/App.jsx";
-import { Auth0Provider } from '@auth0/auth0-react';
+import AddSpot from "./components/AddSpot.jsx";
+import HomePage from "./components/HomePage.jsx";
+import LocationSearch from './components/locationSearch.jsx';
+import RouteNotFound from './components/RouteNotFound.jsx';
+import { render } from "react-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
 
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
-ReactDOM.render(<App/>,document.getElementById("root"));
+
+
+
+ReactDOM.render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<HomePage />} />
+        <Route path="form" element={<AddSpot />} />
+        <Route path=":location" element={< LocationSearch/>}/>
+        <Route path="*"element={<RouteNotFound /> }/>
+      </Route>
+    </Routes>
+  </BrowserRouter>,
+document.getElementById("root"));

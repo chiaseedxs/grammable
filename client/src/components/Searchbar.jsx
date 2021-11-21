@@ -1,5 +1,6 @@
 import React, { Component} from "react";
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
+import { useParams, useNavigate } from "react-router-dom";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -7,10 +8,9 @@ import usePlacesAutocomplete, {
 import useOnclickOutside from "react-cool-onclickoutside";
 const libraries = ["places"]
 const axios = require('axios');
+import 'regenerator-runtime/runtime'
 
 function Searchbar(props) {
-
-
   const {
     ready,
     value,
@@ -23,6 +23,7 @@ function Searchbar(props) {
       radius: 100 * 1000,
     },
   });
+  let navigate = useNavigate();
 
 
   const handleInput = (e) => {
@@ -33,22 +34,9 @@ function Searchbar(props) {
     clearSuggestions();
   });
 
-  const getSpots = (lng, lat) => {
-    var obj = {lng: lng, lat: lat};
-    axios.get('/spots', {
-      params: {
-        coordinates: obj
-      }
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-  }
 
   const handleSelect = async (address) => {
+
     setValue(address, false);
     clearSuggestions();
 
@@ -56,8 +44,8 @@ function Searchbar(props) {
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
-      console.log(lat,lng)
-      getSpots(lng, lat)
+     navigate(`/location?lng=${lng}&lat=${lat}`)
+      // getSpots(lng, lat)
     } catch (error) {
       console.log("😱 Error: ", error);
     }
@@ -79,23 +67,6 @@ function Searchbar(props) {
   );
 }
 
-// class Searchbar extends Component {
-//   constructor(props) {
-//     super(props);
-//   }
 
-//   render () {
-//     return (
-//       <div className="searchbar-ctn">
-//         <div>Find Instagrammable Spots Anywhere In The World</div>
-//         <div>
-//           <input className="searchbar" placeholder="Search by city, region, or zipcode"></input>
-
-//         </div>
-
-//       </div>
-//     )
-//   }
-// }
 
 export default Searchbar;

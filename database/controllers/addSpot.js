@@ -56,8 +56,10 @@ exports.sendSpots = (req, res) => {
 }
 
 exports.sendAll= (req, res) => {
+
   return Location.find({})
   .then ((data) => {
+
     res.send(data)
   })
   .catch((err) => {

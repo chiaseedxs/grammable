@@ -1,8 +1,7 @@
 import React, {useState, useRef, useEffect, useCallback} from 'react'
 import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
+import 'regenerator-runtime/runtime'
 import Search from './Search.jsx'
-
-
 const libraries = ["places"]
 
 // styling for map
@@ -25,10 +24,10 @@ const center = {
 
 // MAP
 function Map(props) {
-  const { isLoaded, loadError} = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
-  })
+  // const { isLoaded, loadError} = useLoadScript({
+  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  //   libraries,
+  // })
 
   // states
   const [marker, setMarker] = React.useState(null);
@@ -42,8 +41,6 @@ function Map(props) {
     }
     setMarker(location)
     props.handleAddress(location);
-
-
   }, []);
 
 
@@ -58,11 +55,10 @@ function Map(props) {
   }, []);
 
 
-  if (loadError) return "Error loading maps";
-  if (!isLoaded) return "Loading Maps"
+  // if (loadError) return "Error loading maps";
+  // if (!isLoaded) return "Loading Maps"
 
   return (
-
     <div className="map">
       <Search panTo={panTo} />
       <GoogleMap

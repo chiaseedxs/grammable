@@ -22,6 +22,10 @@ class AddSpot extends Component {
       locationDescription: "",
       locationCovid: "",
       submit: false,
+      nameError: "",
+      locationError: "",
+      photoError: "",
+      descriptionError:""
     }
     this.handleBusiness = this.handleBusiness.bind(this);
     this.handlePhoto = this.handlePhoto.bind(this);
@@ -29,7 +33,43 @@ class AddSpot extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAddress = this.handleAddress.bind(this);
+    this.validate = this.validate.bind(this);
     this.exit = this.exit.bind(this);
+  }
+
+  validate () {
+    let submit = true;
+    if (this.state.locationName === "") {
+      submit = false;
+      this.setState({
+        nameError: "Please enter location name!"
+      })
+
+    }
+
+    if (this.state.locationAddress.length === 0) {
+      submit = false;
+      this.setState({
+        locationError: "Please pin location on map!"
+      })
+    }
+
+    if (Object.keys(this.state.photo).length === 0) {
+      submit = false;
+
+      this.setState({
+        photoError: "please submit at least one picture!"
+      })
+    }
+
+    if (this.state.locationDescription === "") {
+      submit = false;
+      this.setState({
+        descriptionError: "please share short description!"
+      })
+    }
+
+    return submit
   }
 
   handleBusiness (event) {
@@ -43,14 +83,16 @@ class AddSpot extends Component {
     photos[URL.createObjectURL(event.target.files[0])] = event.target.files[0]
 
     this.setState({
-      photo: photos
+      photo: photos,
+      photoError: ""
     })
   }
 
   handleAddress(address) {
     var coordinates = [address.lng, address.lat]
     this.setState({
-      locationAddress: coordinates
+      locationAddress: coordinates,
+      locationError: ""
     })
   }
 
@@ -70,6 +112,18 @@ class AddSpot extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+
+    if (event.target.name === "locationName") {
+      this.setState({
+        nameError: ""
+      })
+    }
+
+    if (event.target.name === "locationDescription") {
+      this.setState({
+        descriptionError: ""
+      })
+    }
   }
 
   exit () {
@@ -81,43 +135,47 @@ class AddSpot extends Component {
 
   handleSubmit (e) {
     e.preventDefault();
-    let data = new FormData();
-    var photos = Object.values(this.state.photo);
+    let validated = this.validate();
 
-    var body = {
-      isBusiness: this.state.business,
-      picture: data,
-      Name: this.state.locationName,
-      Address: this.state.locationAddress,
-      Link: this.state.websiteLink,
-      phoneNumber: this.state.websitePhoneNumber,
-      websiteEmail: this.state.websiteEmail,
-      locationDescription: this.state.locationDescription,
-      locationCovid: this.state.locationCovid,
-    }
+    if (validated) {
 
-    photos.forEach(file => data.append('photo', file));
-    // data.append('body', body)
-    axios({
-      url: '/form',
-      data: data,
-      params: body,
-      method: 'post'
-    })
-    .then((res) => {
-      this.setState({
-        submit: true
+      let data = new FormData();
+      var photos = Object.values(this.state.photo);
+
+      var body = {
+        isBusiness: this.state.business,
+        picture: data,
+        Name: this.state.locationName,
+        Address: this.state.locationAddress,
+        Link: this.state.websiteLink,
+        phoneNumber: this.state.websitePhoneNumber,
+        websiteEmail: this.state.websiteEmail,
+        locationDescription: this.state.locationDescription,
+        locationCovid: this.state.locationCovid,
+      }
+
+      photos.forEach(file => data.append('photo', file));
+      // data.append('body', body)
+      axios({
+        url: '/form',
+        data: data,
+        params: body,
+        method: 'post'
       })
-    })
-    .catch(err => console.log('ERR',err))
+      .then((res) => {
+        this.setState({
+          submit: true
+        })
+      })
+      .catch(err => console.log('ERR',err))
+
+    }
   }
-
-
-
 
   render () {
     return (
-      <div>
+      <div className="background-form">
+        <div className="white">.</div>
       {this.state.submit ?  <Submitted exit={this.exit}/> :
       <form
         className="form"
@@ -126,24 +184,28 @@ class AddSpot extends Component {
         encType="multipart/form-data"
         autoComplete="off"
       >
-
-        <h2>Share Instagrammable Spot!</h2>
-        <div>
+        <h2 className="form-title">Share Instagrammable Spot!</h2>
+        <div className="biggercol">
+        <div className="colform-1">
           <div className="form-box">
           <label> Name of location</label>
-          <input className="form-name" name="locationName" onChange={this.handleChange} required></input>
+          <input className="form-name" name="locationName" onChange={this.handleChange}></input>
+          <div className="Error">{this.state.nameError}</div>
           </div>
 
           <div className="form-box">
           <label>Address</label>
           <div className="address-wording">Pin location on the map</div>
-          <Map handleAddress={this.handleAddress}/>
+          <Map handleAddress={this.handleAddress} view={this.props.view}/>
+          <div className="Error">{this.state.locationError}</div>
           <div className="additional-info">
           <label>Addition information</label>
           <input placeholder="e.g. apartment number, free parking"></input>
           </div>
           </div>
+        </div>
 
+          <div className="colform-2">
           <div className="form-box">
             <label>Add Pictures</label>
             <div className="button-test" id="thumbnail">
@@ -170,8 +232,9 @@ class AddSpot extends Component {
               })
               }
               <label htmlFor="upload-photo" className="add-button">+</label>
-              <input type="file" name="photo" id="upload-photo" accept="image/png, image/jpeg" onChange={this.handlePhoto} required></input>
+              <input type="file" name="photo" id="upload-photo" accept="image/png, image/jpeg" onChange={this.handlePhoto} ></input>
             </div>
+            <div className="Error">{this.state.photoError}</div>
           </div>
 
 
@@ -206,6 +269,7 @@ class AddSpot extends Component {
           <div className="form-box">
           <label>Description</label>
           <textarea className="form-description" name="locationDescription" onChange={this.handleChange}></textarea>
+          <div className="Error">{this.state.descriptionError}</div>
           </div>
 
           <div className="form-box">
@@ -214,9 +278,12 @@ class AddSpot extends Component {
           </div>
 
           </div>
+          </div>
           <button className="submit-btn" type="submit">Submit</button>
       </form>
   }
+    <div className="white">.</div>
+
 
       </div>
     )
